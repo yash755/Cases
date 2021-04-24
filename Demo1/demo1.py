@@ -4,13 +4,11 @@ from bs4 import BeautifulSoup
 import csv
 import time
 
-
-file = open('name.txt','r')
-
+file = open('name.txt', 'r')
 
 for f in file:
     name_fin = f
-    name_fin = name_fin.replace('\n','')
+    name_fin = name_fin.replace('\n', '')
 
     print (name_fin)
 
@@ -18,19 +16,15 @@ for f in file:
     payload = {}
     headers = {}
 
-
     proxies = {
         "https": "https://159.65.69.186:9300",
     }
-
 
     s = requests.Session()
 
     response = s.get(url)
     cookies = response.cookies
     html = BeautifulSoup(response.content, 'html.parser')
-
-
 
     payload_element2 = html.find("input", {'id': '__EVENTVALIDATION'})
     payload_element3 = html.find("input", {'id': '__VIEWSTATE'})
@@ -49,9 +43,6 @@ for f in file:
 
     cookies1 = response1.cookies
     html1 = BeautifulSoup(response1.content, 'html.parser')
-
-
-
 
     payload_element10 = html1.find("input", {'id': '__EVENTVALIDATION'})
     payload_element11 = html1.find("input", {'id': '__VIEWSTATE'})
@@ -92,8 +83,6 @@ for f in file:
 
     html3 = BeautifulSoup(response3.content, 'html.parser')
 
-
-
     payload_element14 = html3.find("input", {'id': '__EVENTVALIDATION'})
     payload_element15 = html3.find("input", {'id': '__VIEWSTATE'})
     payload_element16 = html3.find("input", {'id': '__VIEWSTATEGENERATOR'})
@@ -109,7 +98,7 @@ for f in file:
     while i < 22:
         try:
 
-            name = html3.find('a', {'id': 'SheetContentPlaceHolder_ctl00_gvNameResults_lbName_' + str(i-2)})
+            name = html3.find('a', {'id': 'SheetContentPlaceHolder_ctl00_gvNameResults_lbName_' + str(i - 2)})
             name = name.text.strip()
 
             print (name)
@@ -119,14 +108,14 @@ for f in file:
             else:
                 name_data = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults$ctl' + str(i) + '$lbName'
 
-
             payload5 = {}
             payload5["__EVENTTARGET"] = name_data
             payload5["__EVENTVALIDATION"] = str(payload_element14.get('value'))
             payload5["__VIEWSTATE"] = str(payload_element15.get('value'))
             payload5["__VIEWSTATEGENERATOR"] = str(payload_element16.get('value'))
 
-            response5 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload5, cookies=cookies3)
+            response5 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload5,
+                               cookies=cookies3)
             html5 = BeautifulSoup(response5.content, 'html.parser')
 
             trs = html5.find_all('tr')
@@ -212,15 +201,12 @@ for f in file:
                                 temp.append(add2)
                                 temp.append(add3)
 
-
                                 temp.append(a_tag.text.strip())
 
                                 tds = tr.find_all('td')
 
                                 if len(tds) >= 3:
-
                                     temp.append(tds[2].text.strip())
-
 
                                 arr = []
                                 arr.append(temp)
@@ -243,41 +229,39 @@ for f in file:
         except:
             print ("Error")
 
-        i = i+1
-
+        i = i + 1
 
     page = 3
 
     while True:
-        print (page)
 
+        try:
 
-        response4 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload3, cookies=cookies3)
+            print (page)
 
-        cookies3 = response4.cookies
+            response4 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload3,
+                               cookies=cookies3)
 
-        html3 = BeautifulSoup(response4.content, 'html.parser')
+            cookies3 = response4.cookies
 
-        # file = open('data.html','a+')
-        # file.write(str(html3))
-        # file.close()
+            html3 = BeautifulSoup(response4.content, 'html.parser')
 
+            # file = open('data.html','a+')
+            # file.write(str(html3))
+            # file.close()
 
-        payload_element14 = html3.find("input", {'id': '__EVENTVALIDATION'})
-        payload_element15 = html3.find("input", {'id': '__VIEWSTATE'})
-        payload_element16 = html3.find("input", {'id': '__VIEWSTATEGENERATOR'})
+            payload_element14 = html3.find("input", {'id': '__EVENTVALIDATION'})
+            payload_element15 = html3.find("input", {'id': '__VIEWSTATE'})
+            payload_element16 = html3.find("input", {'id': '__VIEWSTATEGENERATOR'})
 
-        payload3 = {}
-        payload3["__EVENTVALIDATION"] = str(payload_element14.get('value'))
-        payload3["__VIEWSTATE"] = str(payload_element15.get('value'))
-        payload3["__VIEWSTATEGENERATOR"] = str(payload_element16.get('value'))
-        payload3["__EVENTTARGET"] = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults'
-        payload3["__EVENTARGUMENT"] = 'Page$' + str(page)
+            payload3 = {}
+            payload3["__EVENTVALIDATION"] = str(payload_element14.get('value'))
+            payload3["__VIEWSTATE"] = str(payload_element15.get('value'))
+            payload3["__VIEWSTATEGENERATOR"] = str(payload_element16.get('value'))
+            payload3["__EVENTTARGET"] = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults'
+            payload3["__EVENTARGUMENT"] = 'Page$' + str(page)
 
-        page = page + 1
-
-
-        if page >=8:
+            page = page + 1
 
             j = 2
             while j < 22:
@@ -288,14 +272,10 @@ for f in file:
 
                     print (name)
 
-
-
                     if j < 10:
                         name_data = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults$ctl0' + str(j) + '$lbName'
                     else:
                         name_data = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults$ctl' + str(j) + '$lbName'
-
-
 
                     payload5 = {}
                     payload5["__EVENTTARGET"] = name_data
@@ -307,13 +287,9 @@ for f in file:
                                        cookies=cookies3)
                     html5 = BeautifulSoup(response5.content, 'html.parser')
 
-
                     trs = html5.find_all('tr')
 
-
-
-                    if trs and len(trs) >=2:
-
+                    if trs and len(trs) >= 2:
 
                         payload_element18 = html5.find("input", {'id': '__EVENTVALIDATION'})
                         payload_element19 = html5.find("input", {'id': '__VIEWSTATE'})
@@ -325,10 +301,8 @@ for f in file:
                         payload6["__VIEWSTATE"] = str(payload_element19.get('value'))
                         payload6["__VIEWSTATEGENERATOR"] = str(payload_element20.get('value'))
 
-
-
                         response8 = s.post('https://cpdocket.cp.cuyahogacounty.us/CaseInfoByName.aspx', data=payload6,
-                                           cookies=cookies3,proxies=proxies)
+                                           cookies=cookies3, proxies=proxies)
 
                         html6 = BeautifulSoup(response8.content, 'html.parser')
 
@@ -336,11 +310,13 @@ for f in file:
                         # print (link)
                         link = link.split('?')
 
-                        if len(link)>=2:
+                        if len(link) >= 2:
 
                             # print ('https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]))
 
-                            response_final = s.get('https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]),cookies=cookies3)
+                            response_final = s.get(
+                                'https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]),
+                                cookies=cookies3)
                             html_final = BeautifulSoup(response_final.content, 'html.parser')
 
                             trs_final = html_final.find_all('tr')
@@ -356,7 +332,7 @@ for f in file:
                                 tr_text = tr.text.strip()
 
                                 if 'Address:' in tr_text:
-                                    tr_text = tr_text.replace('\n','')
+                                    tr_text = tr_text.replace('\n', '')
                                     tr_text = tr_text.replace('\r', '')
                                     tr_text = tr_text.replace('Address:', '')
                                     tr_text = tr_text.lstrip()
@@ -364,16 +340,15 @@ for f in file:
                                         add1 = tr_text
 
                                 if 'Line 2:' in tr_text:
-                                    tr_text = tr_text.replace('\n','')
+                                    tr_text = tr_text.replace('\n', '')
                                     tr_text = tr_text.replace('\r', '')
                                     tr_text = tr_text.replace('Line 2:', '')
                                     tr_text = tr_text.lstrip()
                                     if add2 == '':
                                         add2 = tr_text
 
-
                                 if 'City, State, Zip:' in tr_text:
-                                    tr_text = tr_text.replace('\n','')
+                                    tr_text = tr_text.replace('\n', '')
                                     tr_text = tr_text.replace('\r', '')
                                     tr_text = tr_text.replace('City, State, Zip:', '')
                                     tr_text = tr_text.lstrip()
@@ -381,13 +356,12 @@ for f in file:
                                         add3 = tr_text
 
                                 if 'DOB:' in tr_text:
-                                    tr_text = tr_text.replace('\n','')
+                                    tr_text = tr_text.replace('\n', '')
                                     tr_text = tr_text.replace('\r', '')
                                     tr_text = tr_text.replace('DOB:', '')
                                     tr_text = tr_text.lstrip()
                                     if dob == '':
                                         dob = tr_text
-
 
                             for tr in trs:
                                 try:
@@ -401,17 +375,12 @@ for f in file:
                                         temp.append(add2)
                                         temp.append(add3)
 
-
-
                                         temp.append(a_tag.text.strip())
 
                                         tds = tr.find_all('td')
 
                                         if len(tds) >= 3:
-
                                             temp.append(tds[2].text.strip())
-
-
 
                                         arr = []
                                         arr.append(temp)
@@ -439,4 +408,5 @@ for f in file:
                     print ("Error")
 
                 j = j + 1
-
+        except:
+            break
