@@ -268,7 +268,7 @@ while True:
     page = page + 1
 
 
-    if page >=8:
+    if page >=48:
 
         j = 2
         while j < 22:

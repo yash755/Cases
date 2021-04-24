@@ -302,7 +302,7 @@ for f in file:
                         payload6["__VIEWSTATEGENERATOR"] = str(payload_element20.get('value'))
 
                         response8 = s.post('https://cpdocket.cp.cuyahogacounty.us/CaseInfoByName.aspx', data=payload6,
-                                           cookies=cookies3, proxies=proxies)
+                                           cookies=cookies3)
 
                         html6 = BeautifulSoup(response8.content, 'html.parser')
 
