@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import csv
 import time
 
+
+
+
 url = 'https://cpdocket.cp.cuyahogacounty.us'
 payload = {}
 headers = {}
