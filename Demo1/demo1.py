@@ -26,7 +26,7 @@ for f in file:
 
     s = requests.Session()
 
-    response = s.get(urls)
+    response = s.get(url)
     cookies = response.cookies
     html = BeautifulSoup(response.content, 'html.parser')
 
