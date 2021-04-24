@@ -12,6 +12,8 @@ for f in file:
     name_fin = f
     name_fin = name_fin.replace('\n','')
 
+    print (name_fin)
+
     url = 'https://cpdocket.cp.cuyahogacounty.us'
     payload = {}
     headers = {}
@@ -249,181 +251,180 @@ for f in file:
     while True:
         print (page)
 
-        try:
-            response4 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload3, cookies=cookies3)
 
-            cookies3 = response4.cookies
+        response4 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload3, cookies=cookies3)
 
-            html3 = BeautifulSoup(response4.content, 'html.parser')
+        cookies3 = response4.cookies
 
-            # file = open('data.html','a+')
-            # file.write(str(html3))
-            # file.close()
+        html3 = BeautifulSoup(response4.content, 'html.parser')
 
+        # file = open('data.html','a+')
+        # file.write(str(html3))
+        # file.close()
 
-            payload_element14 = html3.find("input", {'id': '__EVENTVALIDATION'})
-            payload_element15 = html3.find("input", {'id': '__VIEWSTATE'})
-            payload_element16 = html3.find("input", {'id': '__VIEWSTATEGENERATOR'})
 
-            payload3 = {}
-            payload3["__EVENTVALIDATION"] = str(payload_element14.get('value'))
-            payload3["__VIEWSTATE"] = str(payload_element15.get('value'))
-            payload3["__VIEWSTATEGENERATOR"] = str(payload_element16.get('value'))
-            payload3["__EVENTTARGET"] = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults'
-            payload3["__EVENTARGUMENT"] = 'Page$' + str(page)
+        payload_element14 = html3.find("input", {'id': '__EVENTVALIDATION'})
+        payload_element15 = html3.find("input", {'id': '__VIEWSTATE'})
+        payload_element16 = html3.find("input", {'id': '__VIEWSTATEGENERATOR'})
 
-            page = page + 1
+        payload3 = {}
+        payload3["__EVENTVALIDATION"] = str(payload_element14.get('value'))
+        payload3["__VIEWSTATE"] = str(payload_element15.get('value'))
+        payload3["__VIEWSTATEGENERATOR"] = str(payload_element16.get('value'))
+        payload3["__EVENTTARGET"] = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults'
+        payload3["__EVENTARGUMENT"] = 'Page$' + str(page)
 
+        page = page + 1
 
-            if page >=8:
 
-                j = 2
-                while j < 22:
-                    try:
+        if page >=8:
 
-                        name = html3.find('a', {'id': 'SheetContentPlaceHolder_ctl00_gvNameResults_lbName_' + str(j - 2)})
-                        name = name.text.strip()
+            j = 2
+            while j < 22:
+                try:
 
-                        print (name)
+                    name = html3.find('a', {'id': 'SheetContentPlaceHolder_ctl00_gvNameResults_lbName_' + str(j - 2)})
+                    name = name.text.strip()
 
+                    print (name)
 
 
-                        if j < 10:
-                            name_data = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults$ctl0' + str(j) + '$lbName'
-                        else:
-                            name_data = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults$ctl' + str(j) + '$lbName'
 
+                    if j < 10:
+                        name_data = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults$ctl0' + str(j) + '$lbName'
+                    else:
+                        name_data = 'ctl00$SheetContentPlaceHolder$ctl00$gvNameResults$ctl' + str(j) + '$lbName'
 
 
-                        payload5 = {}
-                        payload5["__EVENTTARGET"] = name_data
-                        payload5["__EVENTVALIDATION"] = str(payload_element14.get('value'))
-                        payload5["__VIEWSTATE"] = str(payload_element15.get('value'))
-                        payload5["__VIEWSTATEGENERATOR"] = str(payload_element16.get('value'))
 
-                        response5 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload5,
-                                           cookies=cookies3)
-                        html5 = BeautifulSoup(response5.content, 'html.parser')
+                    payload5 = {}
+                    payload5["__EVENTTARGET"] = name_data
+                    payload5["__EVENTVALIDATION"] = str(payload_element14.get('value'))
+                    payload5["__VIEWSTATE"] = str(payload_element15.get('value'))
+                    payload5["__VIEWSTATEGENERATOR"] = str(payload_element16.get('value'))
 
+                    response5 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload5,
+                                       cookies=cookies3)
+                    html5 = BeautifulSoup(response5.content, 'html.parser')
 
-                        trs = html5.find_all('tr')
 
+                    trs = html5.find_all('tr')
 
 
-                        if trs and len(trs) >=2:
 
+                    if trs and len(trs) >=2:
 
-                            payload_element18 = html5.find("input", {'id': '__EVENTVALIDATION'})
-                            payload_element19 = html5.find("input", {'id': '__VIEWSTATE'})
-                            payload_element20 = html5.find("input", {'id': '__VIEWSTATEGENERATOR'})
 
-                            payload6 = {}
-                            payload6["__EVENTTARGET"] = 'ctl00$SheetContentPlaceHolder$info$gvCaseResults$ctl02$lbCaseNum'
-                            payload6["__EVENTVALIDATION"] = str(payload_element18.get('value'))
-                            payload6["__VIEWSTATE"] = str(payload_element19.get('value'))
-                            payload6["__VIEWSTATEGENERATOR"] = str(payload_element20.get('value'))
+                        payload_element18 = html5.find("input", {'id': '__EVENTVALIDATION'})
+                        payload_element19 = html5.find("input", {'id': '__VIEWSTATE'})
+                        payload_element20 = html5.find("input", {'id': '__VIEWSTATEGENERATOR'})
 
+                        payload6 = {}
+                        payload6["__EVENTTARGET"] = 'ctl00$SheetContentPlaceHolder$info$gvCaseResults$ctl02$lbCaseNum'
+                        payload6["__EVENTVALIDATION"] = str(payload_element18.get('value'))
+                        payload6["__VIEWSTATE"] = str(payload_element19.get('value'))
+                        payload6["__VIEWSTATEGENERATOR"] = str(payload_element20.get('value'))
 
 
-                            response8 = s.post('https://cpdocket.cp.cuyahogacounty.us/CaseInfoByName.aspx', data=payload6,
-                                               cookies=cookies3,proxies=proxies)
 
-                            html6 = BeautifulSoup(response8.content, 'html.parser')
+                        response8 = s.post('https://cpdocket.cp.cuyahogacounty.us/CaseInfoByName.aspx', data=payload6,
+                                           cookies=cookies3,proxies=proxies)
 
-                            link = html6.find('form').get('action')
-                            # print (link)
-                            link = link.split('?')
+                        html6 = BeautifulSoup(response8.content, 'html.parser')
 
-                            if len(link)>=2:
+                        link = html6.find('form').get('action')
+                        # print (link)
+                        link = link.split('?')
 
-                                # print ('https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]))
+                        if len(link)>=2:
 
-                                response_final = s.get('https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]),cookies=cookies3)
-                                html_final = BeautifulSoup(response_final.content, 'html.parser')
+                            # print ('https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]))
 
-                                trs_final = html_final.find_all('tr')
+                            response_final = s.get('https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]),cookies=cookies3)
+                            html_final = BeautifulSoup(response_final.content, 'html.parser')
 
-                                add1 = ''
-                                add2 = ''
-                                add3 = ''
-                                dob = ''
+                            trs_final = html_final.find_all('tr')
 
-                                # print (add1)
+                            add1 = ''
+                            add2 = ''
+                            add3 = ''
+                            dob = ''
 
-                                for tr in trs_final:
-                                    tr_text = tr.text.strip()
+                            # print (add1)
 
-                                    if 'Address:' in tr_text:
-                                        tr_text = tr_text.replace('\n','')
-                                        tr_text = tr_text.replace('\r', '')
-                                        tr_text = tr_text.replace('Address:', '')
-                                        tr_text = tr_text.lstrip()
-                                        if add1 == '':
-                                            add1 = tr_text
+                            for tr in trs_final:
+                                tr_text = tr.text.strip()
 
-                                    if 'Line 2:' in tr_text:
-                                        tr_text = tr_text.replace('\n','')
-                                        tr_text = tr_text.replace('\r', '')
-                                        tr_text = tr_text.replace('Line 2:', '')
-                                        tr_text = tr_text.lstrip()
-                                        if add2 == '':
-                                            add2 = tr_text
+                                if 'Address:' in tr_text:
+                                    tr_text = tr_text.replace('\n','')
+                                    tr_text = tr_text.replace('\r', '')
+                                    tr_text = tr_text.replace('Address:', '')
+                                    tr_text = tr_text.lstrip()
+                                    if add1 == '':
+                                        add1 = tr_text
 
+                                if 'Line 2:' in tr_text:
+                                    tr_text = tr_text.replace('\n','')
+                                    tr_text = tr_text.replace('\r', '')
+                                    tr_text = tr_text.replace('Line 2:', '')
+                                    tr_text = tr_text.lstrip()
+                                    if add2 == '':
+                                        add2 = tr_text
 
-                                    if 'City, State, Zip:' in tr_text:
-                                        tr_text = tr_text.replace('\n','')
-                                        tr_text = tr_text.replace('\r', '')
-                                        tr_text = tr_text.replace('City, State, Zip:', '')
-                                        tr_text = tr_text.lstrip()
-                                        if add3 == '':
-                                            add3 = tr_text
 
-                                    if 'DOB:' in tr_text:
-                                        tr_text = tr_text.replace('\n','')
-                                        tr_text = tr_text.replace('\r', '')
-                                        tr_text = tr_text.replace('DOB:', '')
-                                        tr_text = tr_text.lstrip()
-                                        if dob == '':
-                                            dob = tr_text
+                                if 'City, State, Zip:' in tr_text:
+                                    tr_text = tr_text.replace('\n','')
+                                    tr_text = tr_text.replace('\r', '')
+                                    tr_text = tr_text.replace('City, State, Zip:', '')
+                                    tr_text = tr_text.lstrip()
+                                    if add3 == '':
+                                        add3 = tr_text
 
+                                if 'DOB:' in tr_text:
+                                    tr_text = tr_text.replace('\n','')
+                                    tr_text = tr_text.replace('\r', '')
+                                    tr_text = tr_text.replace('DOB:', '')
+                                    tr_text = tr_text.lstrip()
+                                    if dob == '':
+                                        dob = tr_text
 
-                                for tr in trs:
-                                    try:
-                                        a_tag = tr.find('a')
-                                        if a_tag:
 
-                                            temp = []
-                                            temp.append(name)
-                                            temp.append(dob)
-                                            temp.append(add1)
-                                            temp.append(add2)
-                                            temp.append(add3)
+                            for tr in trs:
+                                try:
+                                    a_tag = tr.find('a')
+                                    if a_tag:
 
+                                        temp = []
+                                        temp.append(name)
+                                        temp.append(dob)
+                                        temp.append(add1)
+                                        temp.append(add2)
+                                        temp.append(add3)
 
 
-                                            temp.append(a_tag.text.strip())
 
-                                            tds = tr.find_all('td')
+                                        temp.append(a_tag.text.strip())
 
-                                            if len(tds) >= 3:
+                                        tds = tr.find_all('td')
 
-                                                temp.append(tds[2].text.strip())
+                                        if len(tds) >= 3:
 
+                                            temp.append(tds[2].text.strip())
 
 
-                                            arr = []
-                                            arr.append(temp)
 
-                                            with open('data1.csv', 'a+') as csvfile:
-                                                csvwriter = csv.writer(csvfile)
-                                                csvwriter.writerows(arr)
+                                        arr = []
+                                        arr.append(temp)
 
+                                        with open('data1.csv', 'a+') as csvfile:
+                                            csvwriter = csv.writer(csvfile)
+                                            csvwriter.writerows(arr)
 
 
 
-                                    except:
-                                        print ("A Error")
 
+                                except:
+                                    print ("A Error")
 
 
 
@@ -433,11 +434,9 @@ for f in file:
 
 
 
-                    except:
-                        print ("Error")
 
-                    j = j + 1
+                except:
+                    print ("Error")
 
+                j = j + 1
 
-        except:
-            break
