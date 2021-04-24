@@ -2,6 +2,7 @@ import requests
 import json
 from bs4 import BeautifulSoup
 import csv
+import time
 
 url = 'https://cpdocket.cp.cuyahogacounty.us'
 payload = {}
@@ -30,6 +31,7 @@ response1 = s.post(url, data=payload, cookies=cookies)
 
 cookies1 = response1.cookies
 html1 = BeautifulSoup(response1.content, 'html.parser')
+
 
 payload_element10 = html1.find("input", {'id': '__EVENTVALIDATION'})
 payload_element11 = html1.find("input", {'id': '__VIEWSTATE'})
@@ -69,6 +71,8 @@ response3 = s.post(url1, data=payload2, cookies=cookies2)
 cookies3 = response3.cookies
 
 html3 = BeautifulSoup(response3.content, 'html.parser')
+
+
 
 payload_element14 = html3.find("input", {'id': '__EVENTVALIDATION'})
 payload_element15 = html3.find("input", {'id': '__VIEWSTATE'})
@@ -205,6 +209,10 @@ while i < 22:
                                 csvwriter = csv.writer(csvfile)
                                 csvwriter.writerows(arr)
 
+                            time.sleep(1)
+
+
+
 
                     except:
                         print ("A Error")
@@ -227,6 +235,7 @@ while True:
     cookies3 = response4.cookies
 
     html3 = BeautifulSoup(response4.content, 'html.parser')
+
 
     payload_element14 = html3.find("input", {'id': '__EVENTVALIDATION'})
     payload_element15 = html3.find("input", {'id': '__VIEWSTATE'})
@@ -375,6 +384,8 @@ while True:
                                 with open('data.csv', 'a+') as csvfile:
                                     csvwriter = csv.writer(csvfile)
                                     csvwriter.writerows(arr)
+
+                                time.sleep(1)
 
 
                         except:
