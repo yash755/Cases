@@ -12,8 +12,6 @@ for f in file:
     name_fin = f
     name_fin = name_fin.replace('\n','')
 
-    print (name_fin)
-
     url = 'https://cpdocket.cp.cuyahogacounty.us'
     payload = {}
     headers = {}
@@ -45,7 +43,7 @@ for f in file:
     payload["ctl00$SheetContentPlaceHolder$btnYes"] = str(payload_element5.get('value'))
 
     url = 'https://cpdocket.cp.cuyahogacounty.us/'
-    response1 = s.post(url, data=payload, cookies=cookiess)
+    response1 = s.post(url, data=payload, cookies=cookies)
 
     cookies1 = response1.cookies
     html1 = BeautifulSoup(response1.content, 'html.parser')
@@ -64,7 +62,7 @@ for f in file:
     payload1["ctl00$SheetContentPlaceHolder$rbSearches"] = 'crname'
 
     url1 = 'https://cpdocket.cp.cuyahogacounty.us/Search.aspx'
-    response2 = s.post(url1, data=payload1, cookies=cookiess)
+    response2 = s.post(url1, data=payload1, cookies=cookies)
 
     cookies2 = response2.cookies
 
@@ -86,7 +84,7 @@ for f in file:
     payload2["ctl00$SheetContentPlaceHolder$rbSearches"] = 'crname'
 
     url1 = 'https://cpdocket.cp.cuyahogacounty.us/Search.aspx'
-    response3 = s.post(url1, data=payload2, cookies=cookies2s)
+    response3 = s.post(url1, data=payload2, cookies=cookies2)
 
     cookies3 = response3.cookies
 
@@ -250,7 +248,7 @@ for f in file:
 
     while True:
         print (page)
-        response4 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload3, cookies=cookies3s)
+        response4 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload3, cookies=cookies3)
 
         cookies3 = response4.cookies
 
@@ -302,7 +300,7 @@ for f in file:
                     payload5["__VIEWSTATEGENERATOR"] = str(payload_element16.get('value'))
 
                     response5 = s.post('https://cpdocket.cp.cuyahogacounty.us/NameSearchResults.aspx', data=payload5,
-                                       cookies=cookies3s)
+                                       cookies=cookies3)
                     html5 = BeautifulSoup(response5.content, 'html.parser')
 
 
@@ -338,7 +336,7 @@ for f in file:
 
                             # print ('https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]))
 
-                            response_final = s.get('https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]),cookies=cookies3s)
+                            response_final = s.get('https://cpdocket.cp.cuyahogacounty.us/CR_CaseInformation_Defendant.aspx?' + str(link[1]),cookies=cookies3)
                             html_final = BeautifulSoup(response_final.content, 'html.parser')
 
                             trs_final = html_final.find_all('tr')
